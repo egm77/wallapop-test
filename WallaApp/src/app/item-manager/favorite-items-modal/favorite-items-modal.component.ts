@@ -1,5 +1,6 @@
 import { getTestBed } from '@angular/core/testing';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Item } from '../shared/models/item.model';
 
 @Component({
   selector: 'app-favorite-items-modal',
@@ -7,10 +8,10 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./favorite-items-modal.component.scss']
 })
 export class FavoriteItemsModalComponent implements OnInit {
-  @Input() items;
+  @Input() items: Item[];
   @Output() clickClose = new EventEmitter();
   @Output() clickItem = new EventEmitter();
-  itemsShown
+  itemsShown: Item[];
   /*   @Output() clickClose = new EventEmitter();
    */
   constructor() { }
@@ -18,7 +19,6 @@ export class FavoriteItemsModalComponent implements OnInit {
 
   ngOnInit() {
     this.itemsShown = this.items;
-    console.log('teeeest', this.itemsShown)
   }
 
   onClose() {
@@ -26,7 +26,7 @@ export class FavoriteItemsModalComponent implements OnInit {
   }
 
   onDeleteFavItem(deleteFav) {
-    this.clickItem.emit(deleteFav)
+    this.clickItem.emit(deleteFav);
     this.items = this.items.filter(
       item => item !== deleteFav
     )
@@ -50,9 +50,8 @@ export class FavoriteItemsModalComponent implements OnInit {
   }
 
   getText() {
-    console.log('entra')
-    if (this.items.length === 0) return 'NO HAY FAVORITOS'
-    if (this.itemsShown.length === 0) return 'NO SE ENCUENTRAN ELEMENTOS CON EL FILTRO ESTE'
+    if (this.items.length === 0) { return 'NO HAY FAVORITOS'; }
+    if (this.itemsShown.length === 0) { return 'NO SE ENCUENTRAN ELEMENTOS CON EL FILTRO ESTE'; }
   }
 
 }

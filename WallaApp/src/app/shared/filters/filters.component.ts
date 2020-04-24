@@ -22,9 +22,8 @@ export class FiltersComponent implements OnInit {
   ngOnInit() {
     this.filterAvailables = this.filters;
     if (!this.filtersApplied) {
-      this.filtersApplied = []
+      this.filtersApplied = [];
     }
-    console.log('filtesapllied', this.filtersApplied);
   }
 
   onAddFilter() {
@@ -34,9 +33,10 @@ export class FiltersComponent implements OnInit {
   onApplyFilter(filter) {
     this.filtersApplied.push(filter);
     this.currentFilter = null;
-    this.filterAvailables = this.filterAvailables.filter(
-      filterAvailable => filterAvailable !== filter.type
-    )
+    this.filterAvailables = this.filterAvailables
+      .filter(
+        filterAvailable => filterAvailable !== filter.type
+      );
     this.filtersUpdate.emit(this.filtersApplied);
   }
 
@@ -52,10 +52,7 @@ export class FiltersComponent implements OnInit {
 
   @HostListener('document:click', ['$event.target'])
   public onClick(targetElement: ElementRef) {
-    console.log('click', this.filterSelector)
-    if (
-      this.filterSelector
-    ) {
+    if (this.filterSelector) {
       const clickedTypeInside = this.filterSelector.nativeElement.contains(targetElement);
       if (!clickedTypeInside) {
         this.onDeleteCurrentFilter();

@@ -18,28 +18,20 @@ export class SortItemsComponent implements OnInit, OnChanges{
 
   ngOnInit() {
     if (this.keySelected == null) {
-      this.keySelected = ''
+      this.keySelected = '';
     }
-    console.log('filteers', this.keySelected, this.direction)
-
   }
 
   ngOnChanges() {
-    console.log('filteers', this.keySelected, this.direction)
   }
 
   onChangeKey() {
     this.direction = 'ASC';
-    this.sortChanged.emit({keySelected: this.keySelected, direction: this.direction })
+    this.sortChanged.emit({keySelected: this.keySelected, direction: this.direction });
   }
 
   onToggleDirection() {
     this.direction = this.direction === 'ASC' ? 'DESC' : 'ASC';
-    this.sortChanged.emit({keySelected: this.keySelected, direction: this.direction })
+    this.sortChanged.emit({keySelected: this.keySelected, direction: this.direction });
   }
-
-
-
-
-
 }

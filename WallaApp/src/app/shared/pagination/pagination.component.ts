@@ -8,8 +8,8 @@ import * as _ from 'lodash';
 })
 export class PaginationComponent implements OnInit {
 
-  @Input() pageSelected = 1
-  @Input() pagesAmount
+  @Input() pageSelected = 1;
+  @Input() pagesAmount;
   @Output() pageChanged = new EventEmitter();
 
   arrayPages: []
@@ -17,8 +17,7 @@ export class PaginationComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.arrayPages = _.range(1, (this.pagesAmount + 1))
-    console.log('pages', this.arrayPages)
+    this.arrayPages = _.range(1, (this.pagesAmount + 1));
   }
 
   onChangePage(page: number) {
