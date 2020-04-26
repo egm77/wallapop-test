@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ItemMenuComponent } from './item-menu.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('ItemMenuComponent', () => {
   let component: ItemMenuComponent;
@@ -8,7 +9,8 @@ describe('ItemMenuComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ItemMenuComponent ]
+      declarations: [ ItemMenuComponent ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

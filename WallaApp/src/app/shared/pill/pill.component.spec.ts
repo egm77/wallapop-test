@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PillComponent } from './pill.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('PillComponent', () => {
   let component: PillComponent;
@@ -8,7 +9,8 @@ describe('PillComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PillComponent ]
+      declarations: [ PillComponent ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));
@@ -19,7 +21,9 @@ describe('PillComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should emit close', () => {
+    spyOn(component.closeClick, 'emit');
+    component.onClose()
+    expect(component.closeClick.emit).toHaveBeenCalled();
   });
 });

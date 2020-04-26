@@ -52,6 +52,7 @@ export class FavoriteItemsModalComponent implements OnInit {
   getText() {
     if (this.items.length === 0) { return 'NO HAY FAVORITOS'; }
     if (this.itemsShown.length === 0) { return 'NO SE ENCUENTRAN ELEMENTOS CON EL FILTRO ESTE'; }
+    return 'Error';
   }
 
 }

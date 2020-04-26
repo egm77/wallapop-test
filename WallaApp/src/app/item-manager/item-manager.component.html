@@ -1,3 +1,4 @@
+{{ 'TEST' | translate }}
 <div class="item-manager">
   <ng-container *ngIf="!(isLoading$ | async); else loading">
     <ng-container *ngIf="!errorMsg; else error">
@@ -5,10 +6,8 @@
         [direction]="direction" [keySelected]="keySelected" [filtersApplied]="filters"
         (openFavoriteItems)="onShowFavoriteModal(true)" [favorites]="getFavoritesAmount()">
       </app-item-menu>
-      <!--     <app-table *ngIf="items" [totalItems]="filteredItems" [headers]="headers"></app-table>
-  -->
       <div class="item-manager__container">
-        <app-list-cards *ngIf="itemsPage[currentPage]" [items]="itemsPage[currentPage]" (clickFav)="onToggleFav($event)">
+        <app-list-cards *ngIf="itemsPage && itemsPage[currentPage]" [items]="itemsPage[currentPage]" (clickFav)="onToggleFav($event)">
         </app-list-cards>
         <div class="item-manager__pagination" *ngIf="pages > 1 ">
           <app-pagination [pagesAmount]="pages" [pageSelected]="currentPage" (pageChanged)="onChangePage($event)">

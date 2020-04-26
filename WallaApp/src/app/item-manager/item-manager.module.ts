@@ -1,3 +1,4 @@
+import { TranslateModule } from '@ngx-translate/core';
 import { SharedModule } from './../shared/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -13,7 +14,7 @@ import { FavoriteItemsModalComponent } from './favorite-items-modal/favorite-ite
   imports: [
     CommonModule,
     ItemManagerRoutingModule,
-    SharedModule
+    SharedModule,
   ]
 })
 export class ItemManagerModule { }

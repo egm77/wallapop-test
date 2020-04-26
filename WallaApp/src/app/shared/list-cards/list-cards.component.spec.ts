@@ -19,7 +19,18 @@ describe('ListCardsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should emit clickFav', () => {
+    spyOn(component.clickFav, 'emit');
+    const item = {
+      title: 'iPhone 6S Oro',
+      description: 'Vendo un iPhone 6 S color Oro nuevo y sin estrenar.',
+      price: '740',
+      email: 'iphonemail@wallapop.com',
+      image: 'https://webpublic.s3-eu-west-1.amazonaws.com/tech-test/img/iphone.png',
+      fav: false
+    };
+    component.onFavClicked(item);
+    expect(component.clickFav.emit).toHaveBeenCalled();
+    expect(component.clickFav.emit).toHaveBeenCalledWith(item);
   });
 });

@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FilterComponent } from './filter.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('FilterComponent', () => {
   let component: FilterComponent;
@@ -8,7 +9,8 @@ describe('FilterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FilterComponent ]
+      declarations: [ FilterComponent ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));
@@ -19,7 +21,17 @@ describe('FilterComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should emit filter', () => {
+    spyOn(component.filterSelected, 'emit');
+    component.onFilterSelected();
+    expect(component.filterSelected.emit).toHaveBeenCalled();
+    expect(component.filterSelected.emit).toHaveBeenCalledWith(component.filterForm.value);
+  });
+
+  it('should emit null', () => {
+    spyOn(component.filterDeleted, 'emit');
+    component.onFilterDeleted();
+    expect(component.filterDeleted.emit).toHaveBeenCalled();
+    expect(component.filterDeleted.emit).toHaveBeenCalledWith();
   });
 });

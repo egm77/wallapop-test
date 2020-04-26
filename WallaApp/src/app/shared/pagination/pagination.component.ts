@@ -9,15 +9,16 @@ import * as _ from 'lodash';
 export class PaginationComponent implements OnInit {
 
   @Input() pageSelected = 1;
-  @Input() pagesAmount;
+  @Input() pagesAmount: number;
   @Output() pageChanged = new EventEmitter();
 
-  arrayPages: []
+  arrayPages: any[]
 
   constructor() { }
 
   ngOnInit() {
     this.arrayPages = _.range(1, (this.pagesAmount + 1));
+    console.log('test', this.arrayPages, this.pagesAmount);
   }
 
   onChangePage(page: number) {

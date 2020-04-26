@@ -1,12 +1,13 @@
-import { HttpErrorResponse } from '@angular/common/http';
+import { FilterService } from './shared/services/filter.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { finalize } from 'rxjs/operators';
-import { Item } from './shared/models/item.model';
+import { Item, typeEnum } from './shared/models/item.model';
 import { ItemService } from './shared/services/item.service';
 import { PaginationService } from './shared/services/pagination.service';
-import { SortService, Sort } from './shared/services/sort.service';
+import { SortService, Sort, sortDirecction } from './shared/services/sort.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-item-manager',
@@ -22,11 +23,11 @@ export class ItemManagerComponent implements OnInit {
   openFavoriteModal = false;
   pages: number;
   maxItemsToShow = 5;
-  itemsPage
+  itemsPage;
   currentPage = 1;
-  direction
-  keySelected
-  filters
+  direction: sortDirecction;
+  keySelected: typeEnum;
+  filters: { text: string, type: typeEnum }[];
   errorMsg: string;
 
   constructor(
@@ -35,6 +36,7 @@ export class ItemManagerComponent implements OnInit {
     private route: ActivatedRoute,
     private pagination: PaginationService,
     private sort: SortService,
+    private filter: FilterService
   ) { }
 
 
@@ -65,7 +67,6 @@ export class ItemManagerComponent implements OnInit {
 
   initItems() {
     const filters = this.getFiltersFromParams();
-
     if (filters) {
       this.onUpdateFilters(filters);
     } else {
@@ -74,8 +75,9 @@ export class ItemManagerComponent implements OnInit {
   }
 
   getFiltersFromParams(): any {
-    if (!this.route.snapshot.queryParams.filter) { return null; }
-    this.filters = JSON.parse(this.route.snapshot.queryParams.filter);
+    const paramsFilters = this.route.snapshot.queryParamMap.get('filter');
+    if (!paramsFilters) { return null; }
+    this.filters = JSON.parse(paramsFilters);
 
     if (this.filters && this.filters.length) {
       return this.filters;
@@ -83,20 +85,17 @@ export class ItemManagerComponent implements OnInit {
   }
 
   getSortFromParams() {
-    this.keySelected = this.route.snapshot.queryParams.keySelected;
-    this.direction = this.route.snapshot.queryParams.direction;
+    this.keySelected = this.route.snapshot.queryParamMap.get('keySelected') as typeEnum;
+    this.direction = this.route.snapshot.queryParamMap.get('direction') as sortDirecction;
 
     if (this.keySelected && this.direction) {
-      this.orderby({ keySelected: this.keySelected, direction: this.direction });
+      this.onSortChanged({ keySelected: this.keySelected, direction: this.direction });
     }
   }
 
   onUpdateFilters(filters) {
     if (filters.length) {
-      this.filteredItems = null;
-      this.filteredItems = this.items.filter(
-        item => this.isMatch(item, filters)
-      );
+      this.filteredItems = this.filter.getFilteredDate(this.items, filters)
       this.setUrlFilters(JSON.stringify(filters));
     } else {
       this.filteredItems = this.items;
@@ -115,21 +114,6 @@ export class ItemManagerComponent implements OnInit {
       });
   }
 
-  onSortChanged(sort) {
-    this.orderby(sort);
-  }
-
-  isMatch(item: Item, filters) {
-    let match = true;
-    filters.forEach(
-      filter => {
-        if (!item[filter.type].toUpperCase().includes(filter.text.toUpperCase())) {
-          match = false;
-          return;
-        }
-      });
-    return match;
-  }
 
   onToggleFav(item: Item) {
     const itemClicked = this.items.find((i) => i === item);
@@ -141,7 +125,7 @@ export class ItemManagerComponent implements OnInit {
   }
 
   getFavoritesAmount(): number {
-    return this.items.filter(items => items.fav).length;
+    return this.getFavoriteItems().length;
   }
 
   updatePages() {
@@ -149,8 +133,10 @@ export class ItemManagerComponent implements OnInit {
   }
 
   setPages(): void {
-    this.itemsPage = this.pagination.getItemsbyPage(this.filteredItems, this.maxItemsToShow);
-    this.pages = Object.keys(this.itemsPage).length;
+    const itemsPage = this.pagination.getItemsbyPage(this.filteredItems, this.maxItemsToShow);
+    this.itemsPage = itemsPage;
+    console.log(itemsPage);
+    this.pages = Object.keys(itemsPage).length;
   }
 
   onChangePage(page: number) {
@@ -158,7 +144,7 @@ export class ItemManagerComponent implements OnInit {
   }
 
 
-  orderby(sort: Sort) {
+  onSortChanged(sort: Sort) {
     this.router.navigate(
       [],
       {
