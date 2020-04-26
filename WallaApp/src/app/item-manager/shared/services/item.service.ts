@@ -16,9 +16,9 @@ export class ItemService {
 
   getItems(): Observable<Item[]> {
     return this.http
-      .get<{items: Item[]}>(`${environment.baseUrl}/items.json`)
+      .get<{ items: Item[] }>(`${environment.baseUrl}/items.json`)
       .pipe(
-        map(response => response.items)
+        map(response => response.items.map(o => new Item(o)))
       );
   }
 }

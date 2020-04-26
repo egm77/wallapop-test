@@ -1,3 +1,4 @@
+import { TranslateModule } from '@ngx-translate/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PillComponent } from './pill.component';
@@ -9,10 +10,11 @@ describe('PillComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PillComponent ],
-      schemas: [NO_ERRORS_SCHEMA]
+      declarations: [PillComponent],
+      schemas: [NO_ERRORS_SCHEMA],
+      imports: [TranslateModule.forRoot()]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

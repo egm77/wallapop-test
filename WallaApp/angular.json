@@ -87,6 +87,10 @@
               "src/favicon.ico",
               "src/assets"
             ],
+            "codeCoverageExclude": [
+              "src/app/item-manager/shared/models/*",
+              "src/testing/*"
+            ],
             "styles": [
               "src/styles.scss"
             ],

@@ -3,16 +3,16 @@
     <div class="ui yellow button">
       <i class="star icon"></i> Favorites
     </div>
-    <a class="ui basic yellow left pointing label">
+    <a class="ui basic yellow left pointing label item-menu__favorites-counter">
       {{ favorites }}
     </a>
   </div>
   <div>
-    <app-sort-items [keys]="filters" [keySelected]="keySelected" [direction]="direction"
+    <app-sort-items [keys]="keys" [keySelected]="keySelected" [direction]="direction"
       (sortChanged)="onSortChanged($event)"></app-sort-items>
   </div>
   <div class="item-menu__filters">
-    <app-filters [filters]="filters" [filtersApplied]="filtersApplied" (filtersUpdate)="onApplyFilters($event)">
+    <app-filters [filters]="keys" [filtersApplied]="filtersApplied" (filtersUpdate)="onApplyFilters($event)">
     </app-filters>
 
   </div>

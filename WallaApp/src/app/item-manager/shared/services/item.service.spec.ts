@@ -4,6 +4,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 
 import { ItemService } from './item.service';
 import { environment } from 'src/environments/environment';
+import { Item } from '../models/item.model';
 
 describe('ItemService', () => {
   beforeEach(() => TestBed.configureTestingModule({
@@ -50,7 +51,7 @@ describe('ItemService', () => {
           tick();
 
           expect(requestWrapper.request.method).toEqual('GET');
-          expect(response).toEqual(responseObject.items);
+          expect(response).toEqual(responseObject.items.map(item => new Item(item)));
         }
       )
     )

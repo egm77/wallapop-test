@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { every } from 'rxjs/operators';
 import { sortDirecction } from 'src/app/item-manager/shared/services/sort.service';
+import { typeEnum } from 'src/app/item-manager/shared/models/item.model';
 
 @Component({
   selector: 'app-sort-items',
@@ -9,8 +10,8 @@ import { sortDirecction } from 'src/app/item-manager/shared/services/sort.servic
 })
 export class SortItemsComponent implements OnInit {
 
-  @Input() keySelected;
-  @Input() keys
+  @Input() keySelected: typeEnum;
+  @Input() keys: { text: string, id: typeEnum }[];
   @Input() direction: sortDirecction;
   @Output() sortChanged = new EventEmitter();
 
@@ -19,17 +20,17 @@ export class SortItemsComponent implements OnInit {
 
   ngOnInit() {
     if (this.keySelected == null) {
-      this.keySelected = '';
+      this.keySelected = typeEnum.undefined;
     }
   }
 
   onChangeKey() {
     this.direction = sortDirecction.ASC;
-    this.sortChanged.emit({keySelected: this.keySelected, direction: this.direction });
+    this.sortChanged.emit({ keySelected: this.keySelected, direction: this.direction });
   }
 
   onToggleDirection() {
     this.direction = this.direction === sortDirecction.ASC ? sortDirecction.DESC : sortDirecction.ASC;
-    this.sortChanged.emit({keySelected: this.keySelected, direction: this.direction });
+    this.sortChanged.emit({ keySelected: this.keySelected, direction: this.direction });
   }
 }

@@ -6,7 +6,9 @@
     <select class="ui compact selection dropdown" formControlName="type">
       <option value="" hidden>Filter</option>
       <ng-container *ngFor="let filter of filtersAvailables">
-        <option [value]="filter">{{filter}}</option>
+        <ng-container *ngIf="!filter.disabled">
+          <option [value]="filter.id">{{filter.text | translate }}</option>
+        </ng-container>
       </ng-container>
     </select>
     <button class="ui primary icon button" [disabled]="!filterForm.valid" (click)="onFilterSelected()">

@@ -1,8 +1,10 @@
+import { typeEnum } from 'src/app/item-manager/shared/models/item.model';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SortItemsComponent } from './sort-items.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { sortDirecction } from 'src/app/item-manager/shared/services/sort.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('SortItemsComponent', () => {
   let component: SortItemsComponent;
@@ -11,7 +13,8 @@ describe('SortItemsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ SortItemsComponent ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
+      imports: [TranslateModule.forRoot()]
     })
     .compileComponents();
   }));
@@ -22,7 +25,7 @@ describe('SortItemsComponent', () => {
   });
 
   it('should init keySelected', () => {
-    const keySelected = 'title';
+    const keySelected = typeEnum.title;
     component.keySelected = keySelected;
     fixture.detectChanges();
     expect(component.keySelected).toEqual(keySelected);
@@ -34,7 +37,7 @@ describe('SortItemsComponent', () => {
   });
 
   it('should emit change key', () => {
-    const keySelected = 'title';
+    const keySelected = typeEnum.title;
     const direction = sortDirecction.ASC;
     component.keySelected = keySelected;
     spyOn(component.sortChanged, 'emit');
@@ -45,7 +48,7 @@ describe('SortItemsComponent', () => {
   });
 
   it('should emit change direction DESC', () => {
-    const keySelected = 'title';
+    const keySelected = typeEnum.title;
     const direction = sortDirecction.ASC;
     const expected = sortDirecction.DESC;
     component.keySelected = keySelected;
@@ -58,7 +61,7 @@ describe('SortItemsComponent', () => {
   });
 
   it('should emit change direction ASC', () => {
-    const keySelected = 'title';
+    const keySelected = typeEnum.title;
     const direction = sortDirecction.DESC;
     const expected = sortDirecction.ASC;
     component.keySelected = keySelected;

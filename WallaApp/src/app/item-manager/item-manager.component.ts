@@ -15,6 +15,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./item-manager.component.scss']
 })
 export class ItemManagerComponent implements OnInit {
+  defaultPage = 1;
   isLoading$ = new BehaviorSubject(false);
   items: Item[];
   filteredItems: Item[];
@@ -24,7 +25,7 @@ export class ItemManagerComponent implements OnInit {
   pages: number;
   maxItemsToShow = 5;
   itemsPage;
-  currentPage = 1;
+  currentPage = this.defaultPage;
   direction: sortDirecction;
   keySelected: typeEnum;
   filters: { text: string, type: typeEnum }[];
@@ -130,6 +131,7 @@ export class ItemManagerComponent implements OnInit {
 
   updatePages() {
     this.setPages();
+    this.currentPage = this.defaultPage;
   }
 
   setPages(): void {

@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { typeEnum } from '../shared/models/item.model';
 
 @Component({
   selector: 'app-item-menu',
@@ -19,6 +20,24 @@ export class ItemMenuComponent implements OnInit {
 
   filters = ['title', 'description', 'price', 'email' ]
 
+  keys = [
+    {
+      id: typeEnum.title,
+      text : 'HEADER.title'
+    },
+    {
+      id: typeEnum.description,
+      text : 'HEADER.description'
+    },
+    {
+      id: typeEnum.price,
+      text : 'HEADER.price'
+    },
+    {
+      id: typeEnum.email,
+      text : 'HEADER.email'
+    }
+  ];
 
   ngOnInit() {
   }

@@ -186,6 +186,7 @@ describe('ItemManagerComponent', () => {
     component.updatePages();
     expect(paginationService.getItemsbyPage).toHaveBeenCalled();
     expect(component.itemsPage).toEqual(mockItemsFiltered);
+    expect(component.currentPage).toEqual(1);
     expect(component.pages).toEqual(Object.keys(mockItemsFiltered).length);
   });
 

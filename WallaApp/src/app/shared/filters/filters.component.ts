@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, HostListener } from '@angular/core';
+import { typeEnum } from 'src/app/item-manager/shared/models/item.model';
 
 @Component({
   selector: 'app-filters',
@@ -7,15 +8,14 @@ import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, 
 })
 export class FiltersComponent implements OnInit {
 
-  @Input() filters;
+  @Input() filters: { text: string, id: typeEnum }[];
+  @Input() filtersApplied = [];
   @Output() filtersUpdate = new EventEmitter();
 
-  filterAvailables
+  filterAvailables: { text: string, id: typeEnum, disabled?: boolean }[];
+  currentFilter: { text?: string, type?: typeEnum };
 
-  @Input() filtersApplied = [];
   @ViewChild('filterSelector', { static: false }) filterSelector: ElementRef;
-
-  currentFilter
 
   constructor() { }
 
@@ -27,16 +27,17 @@ export class FiltersComponent implements OnInit {
   }
 
   onAddFilter() {
-    this.currentFilter = {}
+    this.currentFilter = this.currentFilter ? null : {};
+  }
+
+  isAnyEnabled() {
+    return (this.filterAvailables.find(filter => !filter.disabled) != null);
   }
 
   onApplyFilter(filter) {
     this.filtersApplied.push(filter);
     this.currentFilter = null;
-    this.filterAvailables = this.filterAvailables
-      .filter(
-        filterAvailable => filterAvailable !== filter.type
-      );
+    this.filterAvailables.find(filterAvailables => filterAvailables.id === filter.type).disabled = true;
     this.filtersUpdate.emit(this.filtersApplied);
   }
 
@@ -44,8 +45,12 @@ export class FiltersComponent implements OnInit {
     this.currentFilter = null;
   }
 
+  getTranslateTag(type: typeEnum): string {
+    return this.filterAvailables.find(filterAvailable => filterAvailable.id === type).text;
+  }
+
   onDeleteAppliedFilter(index: number) {
-    this.filterAvailables.push(this.filtersApplied[index].type);
+    this.filterAvailables.find(filterAvailables => filterAvailables.id === this.filtersApplied[index].type).disabled = false;
     this.filtersApplied.splice(index, 1);
     this.filtersUpdate.emit(this.filtersApplied);
   }
