@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --prod --aot=true",
     "test": "ng test --codeCoverage=true",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -18,7 +18,9 @@
     "@angular/forms": "~8.1.2",
     "@angular/platform-browser": "~8.1.2",
     "@angular/platform-browser-dynamic": "~8.1.2",
+    "@angular/pwa": "^0.901.3",
     "@angular/router": "~8.1.2",
+    "@angular/service-worker": "~8.1.2",
     "@ngx-translate/core": "^12.1.2",
     "@ngx-translate/http-loader": "^4.0.0",
     "lodash": "^4.17.15",
